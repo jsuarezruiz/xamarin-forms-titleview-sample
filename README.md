@@ -2,6 +2,8 @@
 
 **Xamarin.Forms** sample to show the new TitleView feature incuded in **3.2** version.
 
+![Sample](images/xamarin-forms-titleview-sample.gif)
+
 The sample is available for three platforms:
 
 - iOS
