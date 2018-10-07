@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="TitleViewSearch.Views.MoviesView"
+    xmlns:behaviors="clr-namespace:TitleViewSearch.Behaviors"
+    xmlns:templates="clr-namespace:TitleViewSearch.Views.Templates">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <DataTemplate
+                x:Key="MovieItemTemplate">
+                <ViewCell>
+                    <templates:MovieItemTemplate />
+                </ViewCell>
+            </DataTemplate>
+
+            <Style
+                x:Key="TitleSearchStyle"
+                TargetType="Label">
+                <Setter
+                    Property="TextColor"
+                    Value="{StaticResource BlackColor}" />
+                <Setter
+                    Property="BackgroundColor"
+                    Value="{StaticResource WhiteColor}" />
+                <Setter
+                    Property="Margin"
+                    Value="0, 6" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <NavigationPage.TitleView>
+        <Frame
+            CornerRadius="{OnPlatform 12, UWP=1}"
+            BackgroundColor="{OnPlatform Transparent, Android={StaticResource WhiteColor}}"
+            HasShadow="False"
+            IsClippedToBounds="True"
+            Margin="0, 6, 12, 6"
+            Padding="0">
+            <Frame.Content>
+                <SearchBar
+                    x:Name="SearchBar"
+                    Placeholder="Search movie..."
+                    HorizontalOptions="FillAndExpand"
+                    SearchCommand="{Binding SearchCommand}"
+                    SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}">
+                    <SearchBar.Behaviors>
+                        <behaviors:SearchTextChangedBehavior />
+                    </SearchBar.Behaviors>
+                </SearchBar>
+            </Frame.Content>
+        </Frame>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <Grid
+            BackgroundColor="{StaticResource BackgroundColor}">
+            <ListView
+                IsVisible="{Binding IsBusy, Converter={StaticResource InverseBoolConverter}}"
+                ItemsSource="{Binding Movies}"
+                ItemTemplate="{StaticResource MovieItemTemplate}"
+                SeparatorVisibility="None"
+                HasUnevenRows="True"
+                SelectionMode="None"/>
+            <ActivityIndicator
+                IsVisible="{Binding IsBusy}"
+                IsRunning="{Binding IsBusy}"
+                Color="{StaticResource AccentColor}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
